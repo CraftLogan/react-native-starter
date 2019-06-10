@@ -1,4 +1,10 @@
 {
   "name": "ReactNativeStarter",
-  "displayName": "ReactNativeStarter"
+  "displayName": "ReactNativeStarter",
+  "expo": {
+    "name": "ReactNativeStarter",
+    "slug": "ReactNativeStarter",
+    "sdkVersion": "33.0.0",
+    "privacy": "public"
+  }
 }

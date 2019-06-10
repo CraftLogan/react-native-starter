@@ -8,6 +8,7 @@ import { colors, fonts } from '../../styles';
 import HomeScreen from '../home/HomeViewContainer';
 import CalendarScreen from '../calendar/CalendarViewContainer';
 import GridsScreen from '../grids/GridsViewContainer';
+import TipHomeScreen from '../tiphome/TipHomeViewContainer';
 import PagesScreen from '../pages/PagesViewContainer';
 import ComponentsScreen from '../components/ComponentsViewContainer';
 
@@ -64,46 +65,24 @@ export default createBottomTabNavigator(
         header: null,
       },
     },
-    Calendar: {
-      screen: CalendarScreen,
+    Tip: {
+      screen: TipHomeScreen,
       navigationOptions: {
         header: (
           <View style={styles.headerContainer}>
             <Image style={styles.headerImage} source={hederBackground} />
-            <Text style={styles.headerCaption}>Calendar</Text>
+            <Text style={styles.headerCaption}>Tip</Text>
           </View>
         ),
       },
     },
-    Grids: {
+    History: {
       screen: GridsScreen,
       navigationOptions: {
         header: (
           <View style={styles.headerContainer}>
             <Image style={styles.headerImage} source={hederBackground} />
-            <Text style={styles.headerCaption}>Grids</Text>
-          </View>
-        ),
-      },
-    },
-    Pages: {
-      screen: PagesScreen,
-      navigationOptions: {
-        header: (
-          <View style={styles.headerContainer}>
-            <Image style={styles.headerImage} source={hederBackground} />
-            <Text style={styles.headerCaption}>Pages</Text>
-          </View>
-        ),
-      },
-    },
-    Components: {
-      screen: ComponentsScreen,
-      navigationOptions: {
-        header: (
-          <View style={styles.headerContainer}>
-            <Image style={styles.headerImage} source={hederBackground} />
-            <Text style={styles.headerCaption}>Components</Text>
+            <Text style={styles.headerCaption}>History</Text>
           </View>
         ),
       },
@@ -122,13 +101,13 @@ export default createBottomTabNavigator(
           case 'Calendar':
             iconSource = iconCalendar;
             break;
-          case 'Grids':
+          case 'Tip':
             iconSource = iconGrids;
             break;
           case 'Pages':
             iconSource = iconPages;
             break;
-          case 'Components':
+          case 'History':
             iconSource = iconComponents;
             break;
           default:

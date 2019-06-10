@@ -12,6 +12,7 @@ import GalleryScreen from '../gallery/GalleryViewContainer';
 // import ChatScreen from '../containers/chat/ChatScreen';
 // import MessagesScreen from '../containers/chat/MessagesScreen';
 // import ChartsScreen from '../containers/ChartsScreen';
+import HomeScreen from '../home/HomeViewContainer';
 
 import AvailableInFullVersion from '../availableInFullVersion/AvailableInFullVersionViewContainer';
 
@@ -24,16 +25,47 @@ const stackNavigator = createStackNavigator(
     Main: {
       screen: MainTabNavigator,
       navigationOptions: () => ({
-        title: 'React Native Starter',
-        headerLeft: null,
-        headerBackground: (
-          <Image
-            style={{ flex: 1 }}
-            source={headerBackground}
-            resizeMode="cover"
-          />
-        ),
+        title: 'TipItBack',
       }),
+      headerLeft: null
+    },
+    Tip: {
+      screen: HomeScreen,
+      navigationOptions: () => ({
+        title: 'TipItBack',
+      }),
+      headerLeft: props => (
+        <TouchableOpacity
+          onPress={props.onPress}
+          style={{
+            paddingLeft: 25,
+          }}
+        >
+          <Image
+            source={require('../../../assets/images/icons/arrow-back.png')}
+            resizeMode="contain"
+            style={{
+              height: 20,
+            }}
+          />
+        </TouchableOpacity>
+      ),
+      headerRight: props => (
+        <TouchableOpacity
+          onPress={props.onPress}
+          style={{
+            paddingRight: 25,
+          }}
+        >
+          <Image
+            source={require('../../../assets/images/icons/arrow-back.png')}
+            resizeMode="contain"
+            style={{
+              height: 20,
+            }}
+          />
+        </TouchableOpacity>
+      ),
     },
     Profile: {
       screen: AvailableInFullVersion,
@@ -81,13 +113,7 @@ const stackNavigator = createStackNavigator(
         backgroundColor: colors.primary,
         borderBottomWidth: 0,
       },
-      headerBackground: (
-        <Image
-          style={{ flex: 1 }}
-          source={headerBackground}
-          resizeMode="cover"
-        />
-      ),
+      
       headerTitleStyle: {
         color: colors.white,
         fontFamily: fonts.primaryRegular,

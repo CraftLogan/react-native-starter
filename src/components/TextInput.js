@@ -20,7 +20,7 @@ const RNSTextInput = ({
   return (
     <View style={{ alignSelf: 'stretch', flexDirection: 'column' }}>
       <TextInput
-        placeholderTextColor={placeholderTextColor || colors.white}
+        placeholderTextColor={placeholderTextColor || colors.black}
         underlineColorAndroid="white"
         {...restProps}
         style={finalStyle}
@@ -37,8 +37,10 @@ const HEIGHT = 40;
 const styles = StyleSheet.create({
   default: {
     height: HEIGHT,
-    color: 'white',
+    color: 'black',
     fontFamily: fonts.primaryRegular,
+    textAlign: 'center',
+    fontSize: 40,
     ...Platform.select({
       android: {
         paddingLeft: 5,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
   },
   bordered: {
     borderWidth: 0.5,
-    borderColor: colors.lightGray,
+    borderColor: colors.black,
     borderRadius: 20,
     paddingHorizontal: 20,
   },

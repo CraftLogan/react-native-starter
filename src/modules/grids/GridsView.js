@@ -15,8 +15,8 @@ import { RadioGroup, GridRow } from '../../components';
 
 export default class GridsScreen extends React.Component {
   _getRenderItemFunction = () =>
-    [this.renderRowOne, this.renderRowTwo, this.renderRowThree][
-      this.props.tabIndex
+    [this.renderRowZero, this.renderRowOne][
+      0
     ];
 
   _openArticle = article => {
@@ -26,55 +26,47 @@ export default class GridsScreen extends React.Component {
     });
   };
 
-  renderRowOne = rowData => {
-    const cellViews = rowData.item.map(item => (
-      <TouchableOpacity key={item.id} onPress={() => this._openArticle(item)}>
-        <View style={styles.itemOneContainer}>
-          <View style={styles.itemOneImageContainer}>
-            <Image style={styles.itemOneImage} source={{ uri: item.image }} />
-          </View>
-          <View style={styles.itemOneContent}>
-            <Text style={styles.itemOneTitle} numberOfLines={1}>
-              {item.title}
-            </Text>
-            <Text
-              style={styles.itemOneSubTitle}
-              styleName="collapsible"
-              numberOfLines={3}
-            >
-              {item.subtitle}
-            </Text>
-            <Text style={styles.itemOnePrice} numberOfLines={1}>
-              {item.price}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    ));
-    return (
-      <View key={rowData.item[0].id} style={styles.itemOneRow}>
-        {cellViews}
-      </View>
-    );
-  };
-
-  renderRowTwo = ({ item }) => (
+  renderRowZero = ({ item }) => (
     <TouchableOpacity
-      key={item.id}
-      style={styles.itemTwoContainer}
-      onPress={() => this._openArticle(item)}
-    >
-      <View style={styles.itemTwoContent}>
-        <Image style={styles.itemTwoImage} source={{ uri: item.image }} />
-        <View style={styles.itemTwoOverlay} />
-        <Text style={styles.itemTwoTitle}>{item.title}</Text>
-        <Text style={styles.itemTwoSubTitle}>{item.subtitle}</Text>
-        <Text style={styles.itemTwoPrice}>{item.price}</Text>
+    key={item.id}
+    style={styles.itemThreeContainer}
+    onPress={() => this._openArticle(item)}
+  >
+    <View style={styles.itemThreeSubContainer}>
+      <Image source={{ uri: item.image }} style={styles.itemThreeImage} />
+      <View style={styles.itemThreeContent}>
+        <Text style={styles.itemThreeBrand}>{item.brand}</Text>
+        <View>
+          <Text style={styles.itemThreeTitle}>{item.title}</Text>
+          <Text style={styles.itemThreeSubtitle} numberOfLines={1}>
+            {item.subtitle}
+          </Text>
+        </View>
+        <View style={styles.itemThreeMetaContainer}>
+          {item.badge && (
+            <View
+              style={[
+                styles.badge,
+                item.badge === 'NEW' && { backgroundColor: colors.green },
+              ]}
+            >
+              <Text
+                style={{ fontSize: 10, color: colors.white }}
+                styleName="bright"
+              >
+                {item.badge}
+              </Text>
+            </View>
+          )}
+          <Text style={styles.itemThreePrice}>{item.price}</Text>
+        </View>
       </View>
-    </TouchableOpacity>
+    </View>
+    <View style={styles.itemThreeHr} />
+  </TouchableOpacity>
   );
 
-  renderRowThree = ({ item }) => (
+  renderRowOne = ({ item }) => (
     <TouchableOpacity
       key={item.id}
       style={styles.itemThreeContainer}
@@ -115,10 +107,6 @@ export default class GridsScreen extends React.Component {
   );
 
   render() {
-    const groupedData =
-      this.props.tabIndex === 0
-        ? GridRow.groupByRows(this.props.data, 2)
-        : this.props.data;
 
     return (
       <View style={styles.container}>
@@ -137,7 +125,7 @@ export default class GridsScreen extends React.Component {
               : `${item[0] && item[0].id}`
           }
           style={{ backgroundColor: colors.white, paddingHorizontal: 15 }}
-          data={groupedData}
+          data={this.props.data}
           renderItem={this._getRenderItemFunction()}
         />
       </View>

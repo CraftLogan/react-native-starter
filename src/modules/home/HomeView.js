@@ -1,15 +1,21 @@
-import React from 'react';
+
+import React, { Component } from "react";
 import {
   StyleSheet,
   View,
   TouchableOpacity,
   ImageBackground,
+  Image,
 } from 'react-native';
-
+import { Ionicons } from '@expo/vector-icons';
 import { fonts, colors } from '../../styles';
 import { Text } from '../../components/StyledText';
+import { Button} from '../../components';
+import { Logs } from 'expo';
+import { genericTypeAnnotation } from "@babel/types";
 
-export default function HomeScreen({ isExtended, setIsExtended }) {
+
+export default class HomeScreen extends Component {
   // const rnsUrl = 'https://reactnativestarter.com';
   // const handleClick = () => {
   //   Linking.canOpenURL(rnsUrl).then(supported => {
@@ -20,63 +26,144 @@ export default function HomeScreen({ isExtended, setIsExtended }) {
   //     }
   //   });
   // };
+  constructor (props) {
+    super(props);
+    Logs.enableExpoCliLogging();
+    this.addTip.bind(this);
+    this.minusTip.bind(this);
+    this.setupTip();
+}
 
-  return (
+
+  state = {
+    startingAmount: 20.00,
+    totalTip: 0.00,
+    tipPercentage: 0.15
+  };
+
+  setupTip(){
+    this.state.startingAmount = this.state.startingAmount - (this.state.startingAmount * .10);
+  }
+
+  addTip(percent){
+    var add = this.state.totalTip - (this.state.totalTip * this.state.tipPercentage);
+    this.setState({ totalTip: add + this.state.totalTip })
+    console.log(this.state.totalTip)
+  };
+
+  minusTip(){
+    var minus = this.state.totalTip - (this.state.totalTip * this.state.tipPercentage);
+    this.setState({ totalTip: this.state.totalTip - (minus * 0.30) })
+    console.log(this.state.totalTip)
+  };
+
+  render () {
+    return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('../../../assets/images/background.png')}
-        style={styles.bgImage}
-        resizeMode="cover"
-      >
-        <View style={styles.section}>
-          <Text size={20} white>
-            Home
-          </Text>
-        </View>
-        <View style={styles.section}>
-          <Text color="#19e7f7" size={15}>
-            The smartest Way to build your mobile app
-          </Text>
-          <Text size={30} bold white style={styles.title}>
-            React Native Starter
-          </Text>
-        </View>
-        <View style={[styles.section, styles.sectionLarge]}>
-          <Text color="#19e7f7" hCenter size={15} style={styles.description}>
-            {' '}
-            A powerful starter project that bootstraps development of your
-            mobile application and saves you $20 000*
-          </Text>
-          <View style={styles.priceContainer}>
-            <View style={{ flexDirection: 'row' }}>
-              <Text white bold size={50} style={styles.price}>
-                {isExtended ? '$199.95' : '$49.95'}
-              </Text>
-            </View>
-            <TouchableOpacity
-              style={styles.priceLink}
-              onPress={() =>
-                isExtended ? setIsExtended(false) : setIsExtended(true)
-              }
-            >
-              <Text white size={14}>
-                {isExtended
-                  ? 'Multiple Applications License'
-                  : 'Single Application License'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ImageBackground>
+    <View style={{
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      paddingTop: 50,
+    }}>
+      <View style={{width: 120, height: 50, marginLeft: 30, marginTop: 175}}>
+      <Button
+            style={styles.demoButton}
+            primary
+            caption="Minus"
+            onPress={() => {this.minusTip()}}
+          />
+      </View>
+      <View style={{width: 400, height: 150,}}>
+      <Text size={140} black style={{textAlign: "center"}}>
+          ${this.state.totalTip.toFixed(2)}
+            </Text>
+      </View>
+      <View style={{width: 120, height: 50, marginRight: 30, marginTop: 175}}> 
+      <Button
+            style={styles.demoButton}
+            primary
+            caption="Add"
+            onPress={() => {this.addTip()}}
+          />
+      </View>
     </View>
+    <View style={{
+      flex: 1,
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      marginTop: 20,
+      marginLeft: 30,
+      marginRight: 30
+    }}>
+      <View style={{width: 120, height: 120, borderRadius: 20, padding: 10}}>
+        <TouchableOpacity
+          onPress={() => {this.addTip()}}
+          style={{flex: 1, height: 120}}
+        >
+          <Image
+            source={require('../../../assets/images/tipicons/laugh.png')}
+            resizeMode="contain"
+            style={{
+              flex: 1,
+              alignSelf: 'stretch',
+              width: undefined,
+              height: undefined
+            }}
+          />
+        </TouchableOpacity>
+
+      </View>
+      <View style={{width: 120, height: 120, borderRadius: 20, padding: 10}}>
+        <TouchableOpacity
+          onPress={() => {this.addTip()}}
+          style={{flex: 1, height: 120}}
+        >
+          <Image
+            source={require('../../../assets/images/tipicons/runner.png')}
+            resizeMode="contain"
+            style={{
+              flex: 1,
+              alignSelf: 'stretch',
+              width: undefined,
+              height: undefined
+            }}
+          />
+        </TouchableOpacity>
+
+      </View>
+      <View style={{width: 120, height: 120, borderRadius: 20, padding: 10}}>
+        <TouchableOpacity
+          onPress={() => {this.addTip()}}
+          style={{flex: 1, height: 120}}
+        >
+          <Image
+            source={require('../../../assets/images/tipicons/glass.png')}
+            resizeMode="contain"
+            style={{
+              flex: 1,
+              alignSelf: 'stretch',
+              width: undefined,
+              height: undefined
+            }}
+          />
+        </TouchableOpacity>
+
+      </View>
+    </View>
+    </View>
+    
   );
+
+
+}
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flexDirection: 'column',
+    backgroundColor: '#E8E8E8'
   },
   bgImage: {
     flex: 1,
@@ -117,5 +204,9 @@ const styles = StyleSheet.create({
   priceLink: {
     borderBottomWidth: 1,
     borderBottomColor: colors.primary,
+  },
+  demoButton: {
+    marginTop: 8,
+    marginBottom: 8,
   },
 });
